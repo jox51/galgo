@@ -15,10 +15,10 @@ Artisan::command('inspire', function () {
 
 
 // Define a scheduled task for fetching NBA games data
-Schedule::command('nba:fetch-games')->dailyAt('05:00');
-Schedule::command('soccer:fetch-games')->dailyAt('05:00');
-Schedule::command('tennis:fetch-games')->dailyAt('05:00');
-Schedule::command('baseball:fetch-games')->dailyAt('05:00');
+Schedule::command('nba:fetch-games')->dailyAt('17:45');
+Schedule::command('soccer:fetch-games')->dailyAt('17:45');
+Schedule::command('tennis:fetch-games')->dailyAt('17:45');
+Schedule::command('baseball:fetch-games')->dailyAt('17:45');
 
 
 // Registering a custom console command
