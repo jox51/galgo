@@ -1,0 +1,1 @@
+import{j as r}from"./app-CozzRe_P.js";import{E as t}from"./AppLayer-BzNCioOF.js";import"./transition-LHaX7N-R.js";import"./keyboard-B_9VO9ZR.js";function p(){return r.jsx("div",{children:r.jsx(t,{})})}export{p as default};
