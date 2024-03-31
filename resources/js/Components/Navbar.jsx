@@ -40,7 +40,7 @@ export default function Navbar() {
     return (
         <header className="absolute inset-x-0 top-0 z-50">
             <nav
-                className="flex items-center justify-between p-6 lg:px-8"
+                className="flex items-center justify-between p-2 lg:px-8"
                 aria-label="Global"
             >
                 <div className="flex lg:flex-1">
@@ -65,6 +65,7 @@ export default function Navbar() {
                             key={item.name}
                             href={item.href}
                             className="text-sm font-semibold leading-6 text-gray-900"
+                            onClick={() => setMobileMenuOpen(false)}
                         >
                             {item.name}
                         </Link>
@@ -154,11 +155,7 @@ export default function Navbar() {
                     <div className="flex items-center justify-between">
                         <a href="#" className="-m-1.5 p-1.5">
                             <span className="sr-only">G-Algo</span>
-                            <img
-                                className="h-8 w-auto"
-                                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                                alt=""
-                            />
+                            <img className="h-16 w-auto" src={Logo} alt="" />
                         </a>
                         <button
                             type="button"
@@ -177,6 +174,7 @@ export default function Navbar() {
                                         key={item.name}
                                         href={item.href}
                                         className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                        onClick={() => setMobileMenuOpen(false)}
                                     >
                                         {item.name}
                                     </Link>
