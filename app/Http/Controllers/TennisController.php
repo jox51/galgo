@@ -15,7 +15,7 @@ class TennisController extends Controller {
 
         $dateToday = Carbon::now('America/New_York')->toDateString();
 
-        $todaysTennisMatches = TennisMatchWithAlgoRank::whereDate('created_at', $dateToday)->latest()->get()->toArray();
+        $todaysTennisMatches = TennisMatchWithAlgoRank::whereDate('startTime', $dateToday)->latest()->get()->toArray();
 
         return Inertia::render('Tennis', [
             'tennisGames' => $todaysTennisMatches,
