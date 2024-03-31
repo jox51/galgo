@@ -2,9 +2,23 @@ import React from "react";
 import { MaterialReactTable } from "material-react-table";
 import { parseISO, format } from "date-fns";
 import { usePage } from "@inertiajs/react";
+import { useThemeStore } from "@/store/themeStore"; // Adjust the import path as necessary
+import { useTheme } from "@mui/material";
 
 export default function NBATable({ games }) {
     const { nbaGames } = usePage().props;
+
+    const { darkMode } = useThemeStore();
+    const theme = useTheme();
+
+    const darkBackgroundColor = "#212020"; // Example of a darker gray for dark mode
+
+    // Adjust the mrtTheme based on the darkMode state
+    const mrtTheme = {
+        baseBackgroundColor: darkMode
+            ? darkBackgroundColor
+            : theme.palette.background.paper,
+    };
 
     const tableData = nbaGames || games;
 
@@ -92,6 +106,10 @@ export default function NBATable({ games }) {
             enableRowSelection
             enableColumnOrdering
             enableGlobalFilter={false}
+            mrtTheme={{
+                baseBackgroundColor: mrtTheme.baseBackgroundColor,
+                draggingBorderColor: theme.palette.secondary.main,
+            }}
         />
     );
 }

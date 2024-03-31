@@ -1,22 +1,50 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog } from "@headlessui/react";
 import { usePage } from "@inertiajs/react";
 import { Link } from "@inertiajs/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+    Bars3Icon,
+    XMarkIcon,
+    MoonIcon,
+    SunIcon,
+} from "@heroicons/react/24/outline";
 import Dropdown from "@/Components/Dropdown";
 import Logo from "@/assets/logo.png";
-
-// const navigation = [
-//     { name: "Picks", href: "/picks" },
-//     { name: "Features", href: "#" },
-//     { name: "Results", href: "#" },
-//     { name: "About Me", href: "#" },
-// ];
+import { useThemeStore } from "@/store/themeStore"; // Adjust the import path
 
 export default function Navbar() {
+    // const [darkMode, setDarkMode] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { auth } = usePage().props;
     const navigation = getNavigation(!!auth.user);
+    // Zustand store for managing dark mode
+    const { darkMode, toggleDarkMode } = useThemeStore();
+    // Effect to toggle dark class on html element based on Zustand store's state
+    useEffect(() => {
+        document.documentElement.classList.toggle("dark", darkMode);
+    }, [darkMode]);
+
+    // Toggle dark mode and update class on html element
+    // const toggleDarkMode = () => {
+    //     setDarkMode(!darkMode);
+    //     if (!darkMode) {
+    //         document.documentElement.classList.add("dark");
+    //     } else {
+    //         document.documentElement.classList.remove("dark");
+    //     }
+    // };
+
+    // Check for saved user preference on mount
+    // useEffect(() => {
+    //     const isDarkMode = localStorage.getItem("darkMode") === "true";
+    //     setDarkMode(isDarkMode);
+    //     document.documentElement.classList.toggle("dark", isDarkMode);
+    // }, []);
+
+    // Save preference to localStorage
+    useEffect(() => {
+        localStorage.setItem("darkMode", darkMode);
+    }, [darkMode]);
 
     function getNavigation(authenticated) {
         if (authenticated) {
@@ -38,7 +66,7 @@ export default function Navbar() {
     }
 
     return (
-        <header className="absolute inset-x-0 top-0 z-50">
+        <header className="absolute inset-x-0 top-0 z-50 dark:bg-gray-800">
             <nav
                 className="flex items-center justify-between p-2 lg:px-8"
                 aria-label="Global"
@@ -56,15 +84,18 @@ export default function Navbar() {
                         onClick={() => setMobileMenuOpen(true)}
                     >
                         <span className="sr-only">Open main menu</span>
-                        <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                        <Bars3Icon
+                            className="h-6 w-6 dark:text-gray-300"
+                            aria-hidden="true"
+                        />
                     </button>
                 </div>
-                <div className="hidden lg:flex lg:gap-x-12">
+                <div className="hidden lg:flex lg:gap-x-12 ">
                     {navigation.map((item) => (
                         <Link
                             key={item.name}
                             href={item.href}
-                            className="text-sm font-semibold leading-6 text-gray-900"
+                            className="text-sm font-semibold leading-6  text-gray-900 dark:text-gray-100"
                             onClick={() => setMobileMenuOpen(false)}
                         >
                             {item.name}
@@ -72,7 +103,7 @@ export default function Navbar() {
                     ))}
                 </div>
 
-                <div className="hidden pr-8 lg:flex lg:flex-1 lg:justify-end">
+                <div className="hidden pr-8 lg:flex lg:flex-1 lg:justify-end ">
                     {auth.user ? (
                         <>
                             {/* <Link
@@ -81,14 +112,14 @@ export default function Navbar() {
                             >
                                 Dashboard
                             </Link> */}
-                            <div className="hidden sm:flex sm:items-center sm:ms-6">
-                                <div className="ms-3 relative">
+                            <div className="hidden sm:flex sm:items-center sm:ms-6  ">
+                                <div className="ms-3 relative  ">
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <span className="inline-flex rounded-md">
                                                 <button
                                                     type="button"
-                                                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                    className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 dark:bg-gray-800 dark:text-gray-100"
                                                 >
                                                     {auth.user.name}
 
@@ -130,19 +161,30 @@ export default function Navbar() {
                         <>
                             <Link
                                 href={route("login")}
-                                className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-gray-800 dark:text-gray-100"
                             >
                                 Log in
                             </Link>
                             <Link
                                 href={route("register")}
-                                className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-gray-800 dark:text-gray-100"
                             >
                                 Register
                             </Link>
                         </>
                     )}
                 </div>
+                {/* Dark Mode Toggle */}
+                <button
+                    onClick={toggleDarkMode}
+                    className="p-2 rounded-md focus:outline-none focus:ring focus:ring-gray-300 dark:focus:ring-gray-700"
+                >
+                    {darkMode ? (
+                        <SunIcon className="h-6 w-6 text-gray-800 dark:text-gray-200" />
+                    ) : (
+                        <MoonIcon className="h-6 w-6 text-gray-800 dark:text-gray-200" />
+                    )}
+                </button>
             </nav>
             <Dialog
                 as="div"
@@ -151,7 +193,7 @@ export default function Navbar() {
                 onClose={setMobileMenuOpen}
             >
                 <div className="fixed inset-0 z-50" />
-                <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                <Dialog.Panel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white dark:bg-gray-700 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
                     <div className="flex items-center justify-between">
                         <a href="#" className="-m-1.5 p-1.5">
                             <span className="sr-only">G-Algo</span>
@@ -173,7 +215,7 @@ export default function Navbar() {
                                     <Link
                                         key={item.name}
                                         href={item.href}
-                                        className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                                        className="-mx-3 block rounded-lg px-3 py-2 text-base dark:text-gray-300 font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                         onClick={() => setMobileMenuOpen(false)}
                                     >
                                         {item.name}
@@ -184,7 +226,7 @@ export default function Navbar() {
                                 {auth.user ? (
                                     <Link
                                         href={route("dashboard")}
-                                        className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                        className="rounded-md px-3 py-2 text-black dark:text-gray-300 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                     >
                                         Dashboard
                                     </Link>
@@ -192,13 +234,13 @@ export default function Navbar() {
                                     <>
                                         <Link
                                             href={route("login")}
-                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                            className="rounded-md px-3 py-2 text-black dark:text-gray-300 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                         >
                                             Log in
                                         </Link>
                                         <Link
                                             href={route("register")}
-                                            className="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
+                                            className="rounded-md px-3 py-2 text-black dark:text-gray-300 ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20]"
                                         >
                                             Register
                                         </Link>

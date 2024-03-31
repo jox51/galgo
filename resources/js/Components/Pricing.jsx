@@ -10,42 +10,42 @@ const includedFeatures = [
 export default function Pricing() {
     return (
         // Apply a green gradient background
-        <div className="py-24 sm:py-32 bg-gradient-to-r from-green-100 to-green-600">
+        <div className="py-24 sm:py-32 bg-gradient-to-r from-green-100 to-green-600 dark:from-gray-700 dark:to-gray-900">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl sm:text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                         Straightforward Pricing
                     </h2>
-                    <p className="mt-6 text-lg leading-8 text-green-100">
+                    <p className="mt-6 text-lg leading-8 text-green-100 dark:text-gray-300">
                         For one flat monthly fee, unlock access to the day's
                         most likely wins. Simplify your betting process with our
                         expertly curated picks.
                     </p>
                 </div>
-                <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
-                    <div className="bg-white p-8 sm:p-10 lg:flex-auto rounded-lg">
-                        <h3 className="text-2xl font-bold tracking-tight text-gray-900">
+                <div className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 dark:ring-gray-700/50 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+                    <div className="bg-white dark:bg-gray-800 p-8 sm:p-10 lg:flex-auto rounded-lg">
+                        <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-400">
                             Premium Membership
                         </h3>
-                        <p className="mt-6 text-base leading-7 text-gray-600">
+                        <p className="mt-6 text-base leading-7 text-gray-600 dark:text-gray-400">
                             Gain full access to our platform and transform the
                             way you bet. Make informed decisions with our
                             high-probability picks.
                         </p>
                         <div className="mt-10 flex items-center gap-x-4">
-                            <h4 className="flex-none text-sm font-semibold leading-6 text-green-600">
+                            <h4 className="flex-none text-sm font-semibold leading-6 text-green-600 dark:text-gray-400">
                                 Included in all plans
                             </h4>
-                            <div className="h-px flex-auto bg-green-200" />
+                            <div className="h-px flex-auto bg-green-200 dark:bg-green-700" />
                         </div>
                         <ul
                             role="list"
-                            className="mt-8 space-y-4 text-sm leading-6 text-gray-600"
+                            className="mt-8 space-y-4 text-sm leading-6 text-gray-600 dark:text-gray-400"
                         >
                             {includedFeatures.map((feature) => (
                                 <li key={feature} className="flex gap-x-3">
                                     <CheckIcon
-                                        className="h-6 w-5 flex-none text-green-600"
+                                        className="h-6 w-5 flex-none text-green-600 dark:text-green-700"
                                         aria-hidden="true"
                                     />
                                     {feature}
@@ -53,17 +53,17 @@ export default function Pricing() {
                             ))}
                         </ul>
                     </div>
-                    <div className="bg-white -mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0 rounded-lg">
-                        <div className="rounded-2xl py-10 text-center ring-1 ring-inset ring-green-900/10 lg:flex lg:flex-col lg:justify-center lg:py-16">
+                    <div className="bg-white dark:bg-gray-800 -mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0 rounded-lg">
+                        <div className="rounded-2xl py-10 text-center ring-1 ring-inset ring-green-900/10 dark:ring-green-700/50 lg:flex lg:flex-col lg:justify-center lg:py-16">
                             <div className="mx-auto max-w-xs px-8">
-                                <p className="text-base font-semibold text-gray-900">
+                                <p className="text-base font-semibold text-gray-900 dark:text-gray-400">
                                     Join our winning community
                                 </p>
                                 <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                                    <span className="text-5xl font-bold tracking-tight text-gray-900">
+                                    <span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-gray-400">
                                         $80
                                     </span>
-                                    <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">
+                                    <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600 dark:text-gray-400">
                                         /month
                                     </span>
                                 </p>
@@ -73,7 +73,7 @@ export default function Pricing() {
                                 >
                                     Subscribe Now
                                 </a>
-                                <p className="mt-6 text-xs leading-5 text-gray-600">
+                                <p className="mt-6 text-xs leading-5 text-gray-600 dark:text-gray-400">
                                     Cancel anytime. No hidden fees.
                                 </p>
                             </div>

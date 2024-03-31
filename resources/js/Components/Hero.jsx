@@ -15,14 +15,14 @@ export default function Hero({ auth }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
-        <div className="bg-white">
-            <div className="relative isolate px-6 pt-14 lg:px-8">
+        <div className="bg-white dark:bg-gray-800">
+            <div className="relative isolate px-6 pt-14 lg:px-8 ">
                 <div
                     className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
                     aria-hidden="true"
                 >
                     <div
-                        className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg]"
+                        className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] "
                         style={{
                             background:
                                 "linear-gradient(to top right, #76b852, #8DC26F)", // Adjusted for green gradient
@@ -34,10 +34,10 @@ export default function Hero({ auth }) {
                 </div>
                 <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
                     <div className="text-center">
-                        <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                        <h1 className="text-4xl font-bold tracking-tight text-gray-900  dark:text-gray-100 sm:text-6xl">
                             Picks that consistently WIN!
                         </h1>
-                        <p className="mt-6 text-lg leading-8 text-gray-600">
+                        <p className="mt-6 text-lg leading-8 text-gray-600  dark:text-gray-300">
                             Come to the original consistently winning bookie.
                         </p>
                         <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -49,7 +49,7 @@ export default function Hero({ auth }) {
                             </a>
                             <a
                                 href="#"
-                                className="text-sm font-semibold leading-6 text-gray-900"
+                                className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-100"
                             >
                                 Learn more <span aria-hidden="true">→</span>
                             </a>

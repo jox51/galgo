@@ -24,12 +24,12 @@ export default function AppLayer({ games, selectedSport }) {
     return (
         <>
             <div className="min-h-full">
-                <div className="py-10">
+                <div className="py-10 dark:bg-gray-700">
                     <header>
-                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:p-8"></div>
+                        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:p-8 "></div>
                     </header>
                     <main>
-                        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 py-8">
+                        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 py-8 ">
                             {selectedSport === "NBA" && (
                                 <NBATable games={games} />
                             )}

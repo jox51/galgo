@@ -34,16 +34,16 @@ const features = [
 
 export default function Features() {
     return (
-        <div className="py-24 sm:py-32 bg-green-50">
+        <div className="py-24 sm:py-32 bg-green-50 dark:bg-gray-400">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:text-center">
-                    <h2 className="text-base font-semibold leading-7 text-green-600">
+                    <h2 className="text-base font-semibold leading-7 text-green-600 dark:text-gray-700">
                         Winning Made Easy
                     </h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                         Your Gateway to Consistent Wins
                     </p>
-                    <p className="mt-6 text-lg leading-8 text-gray-600">
+                    <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-700">
                         Discover high-probability picks every day, and join a
                         winning community. Make informed bets with our exclusive
                         insights and secure a steady side income.
@@ -60,11 +60,11 @@ export default function Features() {
                                             aria-hidden="true"
                                         />
                                     </div>
-                                    <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
+                                    <p className="ml-16 text-lg leading-6 font-medium text-gray-900 ">
                                         {feature.name}
                                     </p>
                                 </dt>
-                                <dd className="mt-2 ml-16 text-base text-gray-500">
+                                <dd className="mt-2 ml-16 text-base text-gray-500 dark:text-gray-700">
                                     {feature.description}
                                 </dd>
                             </div>
