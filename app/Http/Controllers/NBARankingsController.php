@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\NbaGame;
-
+use Carbon\Carbon;
 
 class NBARankingsController extends Controller {
 
@@ -27,8 +27,11 @@ class NBARankingsController extends Controller {
 
 
 
-    $date = $request->input('date', now()->format('Y-m-d'));
-    $latestGames = NbaGame::whereDate('game_date', $date)
+    // $date = $request->input('date', now()->format('Y-m-d'));
+    $today = Carbon::now("America/New_York")->format('Y-m-d');
+
+
+    $latestGames = NbaGame::whereDate('game_date', $today)
       ->get();
 
     // $latestGames = NbaGame::latest()->get();

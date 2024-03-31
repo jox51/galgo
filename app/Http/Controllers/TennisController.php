@@ -13,7 +13,7 @@ class TennisController extends Controller {
     public function create() {
 
 
-        $dateToday = Carbon::today()->toDateString();
+        $dateToday = Carbon::now('America/New_York')->toDateString();
 
         $todaysTennisMatches = TennisMatchWithAlgoRank::whereDate('created_at', $dateToday)->latest()->get()->toArray();
 

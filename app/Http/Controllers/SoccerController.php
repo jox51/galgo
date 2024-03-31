@@ -18,9 +18,11 @@ class SoccerController extends Controller {
 
 
 
-        $dateToday = Carbon::today()->toDateString();
+        $dateToday = Carbon::now('America/New_York')->toDateString();
+        dd($dateToday);
 
         $todayProcessedFixtures = ProcessedSoccerFixture::whereDate('created_at', $dateToday)->latest()->get()->toArray();
+
 
 
 
