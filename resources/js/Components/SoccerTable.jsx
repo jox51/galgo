@@ -82,7 +82,8 @@ export default function SoccerTable() {
                 header: "To Win",
             },
             {
-                accessorFn: (row) => `${row.away_goals} - ${row.home_goals}`,
+                accessorFn: (row) =>
+                    `${row.fixtureData.away_goals} - ${row.fixtureData.home_goals}`,
                 id: "correcScore",
                 header: "Correct Score",
             },
