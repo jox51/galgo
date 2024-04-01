@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->string('algo_rank');
             $table->double('home_probability');
             $table->double('away_probability');
-            // $table->integer('home_goals')->nullable();
-            // $table->integer('away_goals')->nullable();
+            $table->integer('home_goals')->nullable();
+            $table->integer('away_goals')->nullable();
             $table->timestamps();
         });
     }

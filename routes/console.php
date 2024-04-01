@@ -16,7 +16,7 @@ Artisan::command('inspire', function () {
 
 // Define a scheduled task for fetching NBA games data
 Schedule::command('nba:fetch-games')->timezone('America/New_York')->dailyAt('05:00');
-Schedule::command('soccer:fetch-games')->timezone('America/New_York')->dailyAt('08:45');
+Schedule::command('soccer:fetch-games')->timezone('America/New_York')->dailyAt('09:00');
 Schedule::command('tennis:fetch-games')->timezone('America/New_York')->dailyAt('05:00');
 Schedule::command('baseball:fetch-games')->timezone('America/New_York')->dailyAt('05:00');
 

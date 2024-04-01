@@ -267,8 +267,8 @@ class SoccerStandingsService {
         'algo_rank' => $game['algo_rank'],
         'home_probability' =>  $homeTeamData['probability'],
         'away_probability' => $awayTeamData['probability'],
-        // 'home_goals' => $homeTeamData['goals'] ?? 0,
-        // 'away_goals' => $awayTeamData['goals'] ?? 0,
+        'home_goals' => $homeTeamData['goals'] ?? 0,
+        'away_goals' => $awayTeamData['goals'] ?? 0,
 
       ];
 
@@ -287,8 +287,8 @@ class SoccerStandingsService {
         'algo_rank' => $game['algo_rank'],
         'home_probability' => $game['home_probability'],
         'away_probability' => $game['away_probability'],
-        // 'home_goals' => $game['home_goals'],
-        // 'away_goals' => $game['away_goals'],
+        'home_goals' => $game['home_goals'],
+        'away_goals' => $game['away_goals'],
       ]);
     }
   }
