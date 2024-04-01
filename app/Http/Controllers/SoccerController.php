@@ -23,6 +23,9 @@ class SoccerController extends Controller {
 
         $todayProcessedFixtures = ProcessedSoccerFixture::whereDate('created_at', $dateToday)->latest()->get()->toArray();
 
+        // $soccerStandingsService = new SoccerStandingsService();
+        // $soccerStandingsService->fetchSoccerStandings();
+
 
         return Inertia::render('Soccer', [
             'soccerGames' => $todayProcessedFixtures,

@@ -38,6 +38,7 @@ export default function SoccerTable() {
         };
     });
 
+    console.log({ tableData });
     const algoRankColor = (rank) => {
         const colors = {
             A: "#4CAF50", // Green
@@ -79,6 +80,11 @@ export default function SoccerTable() {
                         : `${row.fixtureData.teams.away.name}`,
                 id: "toWin",
                 header: "To Win",
+            },
+            {
+                accessorFn: (row) => `${row.away_goals} - ${row.home_goals}`,
+                id: "correcScore",
+                header: "Correct Score",
             },
             {
                 accessorKey: "algo_rank",

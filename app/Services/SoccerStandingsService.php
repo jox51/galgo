@@ -12,21 +12,29 @@ class SoccerStandingsService {
 
   public function fetchSoccerStandings() {
 
+    // max time execution
+    set_time_limit(300); // Sets the maximum execution time to 60 seconds
+
+
     // Fetch todays soccer fixtures
     $gamesForToday = $this->fetchFixturesForToday();
 
-    // Add standings to the fixtures
+    // // Add standings to the fixtures
     $todaysGamesAppended = $this->fetchAndAppendStandings($gamesForToday['response']);
+
 
     // Save the standings to the database
     $this->saveSoccerStandings($todaysGamesAppended);
 
     $dateToday = Carbon::today()->toDateString();
 
-    // Fetch the latest data from the database based on todays date
+    //Fetch the latest data from the database based on todays date
     $latestData = SoccerFixture::whereDate('created_at', $dateToday)
       ->latest()
       ->get();
+
+    // Fetch and append correct scores
+    $this->fetchAndAppendCorrectScores($latestData);
 
     // calculate algo ranking for soccer
     $processedData = $this->calculateAlgoRankingForSoccer($latestData);
@@ -115,6 +123,7 @@ class SoccerStandingsService {
     return $filteredFixtures;
   }
 
+
   public function saveSoccerStandings($standings) {
     // Save the standings to the database
     $uniqueStandings = collect($standings)->unique(function ($item) {
@@ -133,21 +142,70 @@ class SoccerStandingsService {
     }
   }
 
+  public function fetchAndAppendCorrectScores($fixtures) {
+    // Add logic to fetch and append correct scores
+
+    // $processedGames = [];
+
+    foreach ($fixtures as $fixture) {
+
+      $teams = json_decode($fixture->teams, true);
+      $fixtureObject = json_decode($fixture->fixture, true);
+
+      $fixtureId = $fixtureObject['id'];
+      $apiKey = env('RAPID_API_KEY');
+
+      // Fetch standings
+      $correctScoresResponse = Http::withHeaders([
+        'X-RapidAPI-Key' => $apiKey,
+        'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
+      ])->get('https://api-football-v1.p.rapidapi.com/v3/predictions', [
+        'fixture' => $fixtureId,
+      ]);
+
+      $correctScoresData = $correctScoresResponse->json();
+      $goalsHome = $correctScoresData['response'][0]['predictions']['goals']['home'] ?? 0;
+      $goalsAway = $correctScoresData['response'][0]['predictions']['goals']['away'] ?? 0;
+      $winner = $correctScoresData['response'][0]['predictions']['winner']  ?? 0;
+
+
+
+
+
+
+      $teams['home']['goals'] = $goalsHome;
+      $teams['away']['goals'] = $goalsAway;
+      $fixtureObject['winner'] = $winner;
+
+
+      $fixture->teams = json_encode($teams);
+      $fixture->fixture = json_encode($fixtureObject);
+
+
+      $fixture->save();
+
+
+
+      // $processedGames[] = $fixture;
+    }
+  }
+
   public function calculateAlgoRankingForSoccer($games) {
     $processedGames = []; // Initialize an empty array to store processed games
 
     foreach ($games as &$game) {
 
       // Decode JSON strings to arrays
+      $fixtureData = json_decode($game->fixture, true);
       $leagueData = json_decode($game->league, true);
       $homeTeamData = json_decode($game->teams, true)['home'];
       $awayTeamData = json_decode($game->teams, true)['away'];
 
-
+      // Adjust 'goals' for both teams
+      $homeTeamData['goals'] = (int) floor(abs($homeTeamData['goals']));
+      $awayTeamData['goals'] = (int) floor(abs($awayTeamData['goals']));
 
       $numOfTeams =  $leagueData['numOfTeams'];
-
-
 
       $homeLeagueStandingPercentage = ($homeTeamData['ranking'] / $numOfTeams) * 100;
       $awayLeagueStandingPercentage = ($awayTeamData['ranking'] / $numOfTeams) * 100;
@@ -194,8 +252,6 @@ class SoccerStandingsService {
       }
 
 
-      // Add more conditions as needed
-
       // Ensure probabilities are within bounds [0,1]
       $homeTeamData['probability'] = max(0, min(1, $homeTeamData['probability']));
       $awayTeamData['probability'] = max(0, min(1, $awayTeamData['probability']));
@@ -209,9 +265,12 @@ class SoccerStandingsService {
         'algo_rank' => $game['algo_rank'],
         'home_probability' =>  $homeTeamData['probability'],
         'away_probability' => $awayTeamData['probability'],
+        'home_goals' => $homeTeamData['goals'] ?? 0,
+        'away_goals' => $awayTeamData['goals'] ?? 0,
       ];
 
       $processedGames[] = $processedGame; // Push the processed game to the array
+
     }
 
     return $processedGames;
@@ -225,6 +284,8 @@ class SoccerStandingsService {
         'algo_rank' => $game['algo_rank'],
         'home_probability' => $game['home_probability'],
         'away_probability' => $game['away_probability'],
+        'home_goals' => $game['home_goals'],
+        'away_goals' => $game['away_goals'],
       ]);
     }
   }
