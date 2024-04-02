@@ -3,18 +3,7 @@ import NBATable from "@/Components/NBATable";
 import SoccerTable from "./SoccerTable";
 import TennisTable from "./TennisTable";
 import BaseballTable from "./BaseballTable";
-
-const navigation = [
-    { name: "NBA", href: "/nba", current: true },
-    { name: "NHL", href: "#", current: false },
-    { name: "Soccer", href: "#", current: false },
-    { name: "MLB", href: "#", current: false },
-];
-const userNavigation = [
-    { name: "Your Profile", href: "#" },
-    { name: "Settings", href: "#" },
-    { name: "Sign out", href: "#" },
-];
+import HandballTable from "./HandballTable";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -36,6 +25,7 @@ export default function AppLayer({ games, selectedSport }) {
                             {selectedSport === "Soccer" && <SoccerTable />}
                             {selectedSport === "Tennis" && <TennisTable />}
                             {selectedSport === "Baseball" && <BaseballTable />}
+                            {selectedSport === "Handball" && <HandballTable />}
                         </div>
                     </main>
                 </div>

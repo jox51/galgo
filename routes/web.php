@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BaseballController;
+use App\Http\Controllers\HandballController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::get('/picks', [PicksController::class, 'create'])->middleware('auth')->na
 Route::get('/nba', [NBARankingsController::class, 'create'])->middleware('auth')->name('nba');
 Route::get('/soccer', [SoccerController::class, 'create'])->middleware('auth')->name('soccer');
 Route::get('/tennis', [TennisController::class, 'create'])->middleware('auth')->name('tennis');
-Route::get('/baseball', [BaseballController::class, 'create'])->middleware('auth')->name('tennis');
+Route::get('/baseball', [BaseballController::class, 'create'])->middleware('auth')->name('baseball');
+Route::get('/handball', [HandballController::class, 'create'])->middleware('auth')->name('handball');
 
 require __DIR__ . '/auth.php';

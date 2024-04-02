@@ -45,10 +45,11 @@ class SoccerStandingsService {
   public function fetchFixturesForToday() {
     // Use Carbon or the date() function to get today's date in 'Y-m-d' format
     $todayDate = date('Y-m-d');
+    $apiKey = env('RAPID_API_KEY');
 
     // Make the API call to fetch fixtures for today
     $response = Http::withHeaders([
-      'X-RapidAPI-Key' => '1240f4bf06msh22e9d539d535101p1b1ff3jsn337bd1967b6d',
+      'X-RapidAPI-Key' => $apiKey,
       'X-RapidAPI-Host' => 'api-football-v1.p.rapidapi.com',
     ])->get('https://api-football-v1.p.rapidapi.com/v3/fixtures', [
       'date' => $todayDate, // Dynamically set the date to today
@@ -193,6 +194,11 @@ class SoccerStandingsService {
   public function calculateAlgoRankingForSoccer($games) {
     $processedGames = []; // Initialize an empty array to store processed games
 
+    $mainLeagues = [
+      'La Liga', 'Premier League', 'Bundesliga',
+      'Primeira Liga', 'Serie A', 'Bundesliga'
+    ];
+
     foreach ($games as &$game) {
 
       // Decode JSON strings to arrays
@@ -200,6 +206,12 @@ class SoccerStandingsService {
       $leagueData = json_decode($game->league, true);
       $homeTeamData = json_decode($game->teams, true)['home'];
       $awayTeamData = json_decode($game->teams, true)['away'];
+
+      // Check if the league is one of the main leagues
+      $isLeagueMain = in_array($leagueData['name'], $mainLeagues);
+
+      // Add 'isLeagueMain' to $fixtureData
+      $fixtureData['isLeagueMain'] = $isLeagueMain;
 
       // Adjust 'goals' for both teams
       $homeTeamData['goals'] = (int) floor(abs($homeTeamData['goals']));
@@ -261,6 +273,7 @@ class SoccerStandingsService {
           'fixture' => json_decode($game->fixture, true),
           'league' => json_decode($game->league, true),
           'teams' => json_decode($game->teams, true),
+          'isLeagueMain' => $isLeagueMain,
           'home_goals' => $homeTeamData['goals'] ?? 0,
           'away_goals' => $awayTeamData['goals'] ?? 0,
         ],

@@ -54,6 +54,7 @@ export default function Navbar() {
                 { name: "Soccer", href: "/soccer" },
                 { name: "Tennis", href: "/tennis" },
                 { name: "Baseball", href: "/baseball" },
+                { name: "Handball", href: "/handball" },
             ];
         } else {
             return [

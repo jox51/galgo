@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { MaterialReactTable } from "material-react-table";
 import { parseISO, format } from "date-fns";
 import { usePage } from "@inertiajs/react";
 import { useThemeStore } from "@/store/themeStore"; // Adjust the import path as necessary
 import { useTheme } from "@mui/material";
+import Button from "./Button";
+
 export default function SoccerTable() {
     const { soccerGames } = usePage().props;
+
+    const [filterMainLeagues, setFilterMainLeagues] = useState(false);
+    const [filteredData, setFilteredData] = useState([]);
 
     const { darkMode } = useThemeStore();
     const theme = useTheme();
@@ -20,25 +25,50 @@ export default function SoccerTable() {
     };
 
     // Parse the fixture_data JSON string and prepare table data
-    const tableData = soccerGames.map((game) => {
-        // Decode fixture_data from JSON string to object
-        const fixtureData = JSON.parse(game.fixture_data);
+    // const tableData = soccerGames.map((game) => {
+    //     // Decode fixture_data from JSON string to object
+    //     const fixtureData = JSON.parse(game.fixture_data);
 
-        // Extract and format date from fixtureData
-        const gameDate = format(
-            parseISO(fixtureData.fixture.date),
-            "MM/dd/yyyy"
-        );
+    //     // Extract and format date from fixtureData
+    //     const gameDate = format(
+    //         parseISO(fixtureData.fixture.date),
+    //         "MM/dd/yyyy"
+    //     );
 
-        // Return a new object representing the table row
-        return {
-            ...game, // Spread other game properties if needed
-            game_date: gameDate, // Include the formatted game date
-            fixtureData, // Include the parsed fixtureData for further use if needed
-        };
-    });
+    //     // Return a new object representing the table row
+    //     return {
+    //         ...game, // Spread other game properties if needed
+    //         game_date: gameDate, // Include the formatted game date
+    //         fixtureData, // Include the parsed fixtureData for further use if needed
+    //     };
+    // });
 
-    console.log({ tableData });
+    useEffect(() => {
+        // Filter data based on isLeagueMain value
+        const filtered = filterMainLeagues
+            ? soccerGames.filter(
+                  (game) => JSON.parse(game.fixture_data).isLeagueMain
+              )
+            : soccerGames;
+
+        // Map through the filtered or full data to prepare table data
+        const tableData = filtered.map((game) => {
+            const fixtureData = JSON.parse(game.fixture_data);
+            const gameDate = format(
+                parseISO(fixtureData.fixture.date),
+                "MM/dd/yyyy"
+            );
+
+            return {
+                ...game,
+                game_date: gameDate,
+                fixtureData,
+            };
+        });
+
+        setFilteredData(tableData);
+    }, [soccerGames, filterMainLeagues]);
+
     const algoRankColor = (rank) => {
         const colors = {
             A: "#4CAF50", // Green
@@ -115,22 +145,36 @@ export default function SoccerTable() {
         []
     );
 
+    const toggleFilterMainLeagues = () => {
+        setFilterMainLeagues(!filterMainLeagues);
+    };
+
     return (
-        <MaterialReactTable
-            columns={columns}
-            data={tableData}
-            muiTableContainerProps={{
-                sx: {
-                    maxHeight: "calc(100vh - 64px)", // adjust based on your layout
-                },
-            }}
-            enableRowSelection
-            enableColumnOrdering
-            enableGlobalFilter={false}
-            mrtTheme={{
-                baseBackgroundColor: mrtTheme.baseBackgroundColor,
-                draggingBorderColor: theme.palette.secondary.main,
-            }}
-        />
+        <>
+            <div className="flex justify-center pb-4">
+                <Button variant="contained" onClick={toggleFilterMainLeagues}>
+                    {filterMainLeagues
+                        ? "Show All Leagues"
+                        : "Filter Main Leagues"}
+                </Button>
+            </div>
+
+            <MaterialReactTable
+                columns={columns}
+                data={filteredData}
+                muiTableContainerProps={{
+                    sx: {
+                        maxHeight: "calc(100vh - 64px)", // adjust based on your layout
+                    },
+                }}
+                enableRowSelection
+                enableColumnOrdering
+                enableGlobalFilter={false}
+                mrtTheme={{
+                    baseBackgroundColor: mrtTheme.baseBackgroundColor,
+                    draggingBorderColor: theme.palette.secondary.main,
+                }}
+            />
+        </>
     );
 }
