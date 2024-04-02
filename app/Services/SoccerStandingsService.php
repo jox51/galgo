@@ -247,8 +247,8 @@ class SoccerStandingsService {
         $awayTeamData['probability'] = 0.80;
       } else if ($homeLeagueStandingPercentage >= 17 && $homeLeagueStandingPercentage < 33 && $awayLeagueStandingPercentage >= 67) {
         $game['algo_rank'] = 'e';
-        $homeTeamData['probability'] = 0.25;
-        $awayTeamData['probability'] = 0.75;
+        $homeTeamData['probability'] = 0.75;
+        $awayTeamData['probability'] = 0.25;
       } else if ($awayLeagueStandingPercentage >= 17 && $awayLeagueStandingPercentage < 33 && $homeLeagueStandingPercentage >= 67) {
         $game['algo_rank'] = 'f';
         $homeTeamData['probability'] = 0.35;
