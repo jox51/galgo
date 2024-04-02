@@ -71,7 +71,7 @@ export default function TennisTable() {
 
             {
                 accessorFn: (row) =>
-                    `${row.homeTeamData.name} vs ${row.awayTeamData.name}`,
+                    `${row.awayTeamData.name} vs ${row.homeTeamData.name}`,
                 id: "game",
                 header: "Game",
             },

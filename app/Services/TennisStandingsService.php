@@ -219,8 +219,8 @@ class TennisStandingsService {
         $awayTeam['probability'] = 0.80;
       } else if ($homeRankingPercentage >= $thresholds['upperThirdThresholdMin']  && $homeRankingPercentage < $thresholds['upperThirdThresholdMax'] && $awayRankingPercentage >= $thresholds['lowerThirdThreshold']) {
         $game['algo_rank'] = 'e';
-        $homeTeam['probability'] = 0.25;
-        $awayTeam['probability'] = 0.75;
+        $homeTeam['probability'] = 0.75;
+        $awayTeam['probability'] = 0.25;
       } else if ($awayRankingPercentage >= $thresholds['upperThirdThresholdMin'] && $awayRankingPercentage < $thresholds['upperThirdThresholdMax'] && $homeRankingPercentage >= $thresholds['lowerThirdThreshold']) {
         $game['algo_rank'] = 'f';
         $homeTeam['probability'] = 0.35;
