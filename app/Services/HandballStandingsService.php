@@ -157,8 +157,8 @@ class HandballStandingsService {
         $awayTeamData['probability'] = 0.80;
       } else if ($homeLeagueStandingPercentage >= 20 && $homeLeagueStandingPercentage < 40 && $awayLeagueStandingPercentage >= 80) {
         $game['algo_rank'] = 'e';
-        $homeTeamData['probability'] = 0.25;
-        $awayTeamData['probability'] = 0.75;
+        $homeTeamData['probability'] = 0.75;
+        $awayTeamData['probability'] = 0.25;
       } else if ($awayLeagueStandingPercentage >= 20 && $awayLeagueStandingPercentage < 40 && $homeLeagueStandingPercentage >= 80) {
         $game['algo_rank'] = 'f';
         $homeTeamData['probability'] = 0.35;
