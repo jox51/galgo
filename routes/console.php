@@ -2,6 +2,7 @@
 
 use App\Models\SoccerFixture;
 use App\Services\BaseballStandingsService;
+use App\Services\CleanupDatabaseService;
 use App\Services\HandballStandingsService;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
@@ -21,6 +22,7 @@ Schedule::command('soccer:fetch-games')->timezone('America/New_York')->dailyAt('
 Schedule::command('tennis:fetch-games')->timezone('America/New_York')->dailyAt('05:00');
 Schedule::command('baseball:fetch-games')->timezone('America/New_York')->dailyAt('05:00');
 Schedule::command('handball:fetch-games')->timezone('America/New_York')->dailyAt('05:00');
+Schedule::command('database:clean')->weekly()->sundays()->at('05:00');
 
 
 // Registering a custom console command
@@ -58,3 +60,10 @@ Artisan::command('handball:fetch-games', function (HandballStandingsService $han
 
     $this->info('Handball games data fetched and saved successfully.');
 })->describe('Fetch and process Handball games data');
+
+Artisan::command('database:clean', function (CleanupDatabaseService $cleanupDatabaseService) {
+    $cleanupDatabaseService = new CleanupDatabaseService();
+    $cleanupDatabaseService->deleteOldEntries();
+
+    $this->info('Database cleaned successfully.');
+})->describe('Clean up old entries from the database');

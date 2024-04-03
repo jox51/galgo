@@ -185,6 +185,10 @@ class TennisStandingsService {
       $homeTeamRanking = $homeTeam['ranking']['ranking'] ?? null;
       $awayTeamRanking = $awayTeam['ranking']['ranking'] ?? null;
 
+      if (!$homeTeamRanking === null || !$awayTeamRanking === null) {
+        continue;
+      }
+
       // Determine the correct player count based on ATP or WTA
       $numOfPlayers = strpos($game['season'], 'ATP') !== false ? $numOfPlayersAtp : $numOfPlayersWta;
 
